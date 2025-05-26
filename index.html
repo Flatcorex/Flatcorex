@@ -15,43 +15,55 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
   <!-- Hero section -->
-  <section class="hero-bg text-white px-6 pt-24 pb-0 text-center relative">
-    <div class="max-w-3xl mx-auto mb-20" data-aos="fade-up">
-  <img src="logo.png" alt="Flatcorex logo" class="mx-auto h-90 md:h-60 mb-6 object-contain" />
-      <p class="text-xl mb-6">Moderns risinājums īpašumu pārvaldītājiem – izīrē, seko izdevumiem un ģenerē rēķinus vienuviet.</p>
-      <a href="#forma" class="bg-blue-600 px-6 py-3 rounded-full text-white hover:bg-blue-500 transition">Sazināties</a>
-    </div>
+<section class="relative bg-gray-900 text-white">
+  <div class="absolute inset-0">
+    <img src="atteelss.png" alt="" class="w-full h-full object-cover object-[60%] opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/80"></div>
+  </div>
 
-   <div class="max-w-6xl mx-auto px-6 text-left pb-24">
+  <div class="relative max-w-4xl mx-auto px-6 pt-12 pb-16 text-center" data-aos="fade-up">
+    <img src="logo.png" alt="Flatcorex logo" class="mx-auto h-20 md:h-24 mb-6 object-contain" />
+
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Vai apnicis Excel, WhatsApp un papīri?</h1>
+    <p class="text-lg md:text-xl mb-6 text-gray-200">
+      Flatcorex automatizē rēķinus, izdevumu uzskaiti un saziņu ar īrniekiem – īpašumu izīrēšana kļūst vienkārša.
+    </p>
+
+    <a href="#forma" class="inline-block bg-red-600 hover:bg-red-500 transition px-8 py-3 rounded-full text-lg font-semibold">
+      🚀 Pieteikt demonstrāciju
+    </a>
+  </div>
+
+<div class="max-w-6xl mx-auto px-6 text-left pb-24">
   <h2 class="text-3xl font-bold text-center mb-10">Ko Tu iegūsi ar Flatcorex?</h2>
   <div class="grid md:grid-cols-3 gap-8">
-    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up">
+    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="0">
       <h3 class="text-lg font-semibold mb-2">📁 Centralizēta pārvaldība</h3>
       <p class="text-sm">Visi dokumenti, rēķini un saziņa vienuviet – bez liekas meklēšanas un haosa.</p>
     </div>
-    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="100">
+    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="50">
       <h3 class="text-lg font-semibold mb-2">⏱️ Laika ietaupījums</h3>
       <p class="text-sm">Automatizētas darbības, gudri paziņojumi un mazāk manuāla darba.</p>
     </div>
-    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="200">
+    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="100">
       <h3 class="text-lg font-semibold mb-2">💬 Ātra saziņa ar īrniekiem</h3>
       <p class="text-sm">Iebūvēts čats ar dokumentu nosūtīšanu, pārskatāmību un vēsturi.</p>
     </div>
-    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="300">
+    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="150">
       <h3 class="text-lg font-semibold mb-2">🧾 Automatizēti rēķini</h3>
       <p class="text-sm">Izraksti rēķinus dažu sekunžu laikā un saņem maksājumu paziņojumus.</p>
     </div>
-    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="400">
+    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="200">
       <h3 class="text-lg font-semibold mb-2">📂 Dokumentu arhīvs</h3>
       <p class="text-sm">Droši glabāti līgumi, pārskati un vēsture – pieejami jebkurā brīdī.</p>
     </div>
-    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="500">
+    <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl shadow" data-aos="fade-up" data-aos-delay="250">
       <h3 class="text-lg font-semibold mb-2">🛠️ Ekskluzīvi pakalpojumi</h3>
       <p class="text-sm">Sadarbībā ar meistariem: santehniķi, elektriķi, dizaineri un citi – tikai Flatcorex lietotājiem.</p>
     </div>
   </div>
 </div>
-  </section>
+</section>
 
   <!-- Kā tas darbojas -->
   <section class="bg-white py-20 px-6">
@@ -104,6 +116,7 @@
     action="https://formspree.io/f/mqaqvnby"
     method="POST"
     class="max-w-md mx-auto bg-white p-6 rounded-xl shadow space-y-4"
+    id="contact-form"
     data-aos="fade-up"
   >
     <input
@@ -131,7 +144,30 @@
     >
       Nosūtīt ziņu
     </button>
+    <p id="success-message" class="text-green-600 text-sm hidden mt-3">✅ Paldies! Jūsu ziņa ir nosūtīta.</p>
   </form>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const message = document.getElementById('success-message');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        form.reset();
+        message.classList.remove('hidden');
+      } else {
+        alert("Kļūda! Ziņu neizdevās nosūtīt.");
+      }
+    });
+  </script>
 </section>
 
   <!-- Footer -->
