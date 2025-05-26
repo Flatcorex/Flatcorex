@@ -95,17 +95,44 @@
     </div>
   </section>
 
-  <!-- Intereses forma -->
-  <section id="forma" class="bg-blue-50 py-16 px-6 text-center">
-    <h2 class="text-2xl font-semibold mb-4">Vai vēlies izmēģināt Flatcorex?</h2>
-    <p class="text-gray-600 mb-6">Aizpildi formu, un sazināšos ar Tevi, lai parādītu demonstrāciju.</p>
-    <form class="max-w-md mx-auto bg-white p-6 rounded-xl shadow space-y-4" data-aos="fade-up">
-      <input type="text" placeholder="Vārds" class="w-full border border-gray-300 rounded px-4 py-2" required>
-      <input type="email" placeholder="E-pasts" class="w-full border border-gray-300 rounded px-4 py-2" required>
-      <textarea placeholder="Komentārs vai jautājums" class="w-full border border-gray-300 rounded px-4 py-2"></textarea>
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500">Sazinies ar mani</button>
-    </form>
-  </section>
+ <!-- Intereses forma -->
+<section id="forma" class="bg-blue-50 py-16 px-6 text-center">
+  <h2 class="text-2xl font-semibold mb-4">Vai vēlies izmēģināt Flatcorex?</h2>
+  <p class="text-gray-600 mb-6">Aizpildi formu, un sazināšos ar Tevi, lai parādītu demonstrāciju.</p>
+
+  <form
+    action="https://formspree.io/f/mqaqvnby"
+    method="POST"
+    class="max-w-md mx-auto bg-white p-6 rounded-xl shadow space-y-4"
+    data-aos="fade-up"
+  >
+    <input
+      type="text"
+      name="name"
+      placeholder="Vārds"
+      class="w-full border border-gray-300 rounded px-4 py-2"
+      required
+    >
+    <input
+      type="email"
+      name="email"
+      placeholder="E-pasts"
+      class="w-full border border-gray-300 rounded px-4 py-2"
+      required
+    >
+    <textarea
+      name="message"
+      placeholder="Komentārs vai jautājums"
+      class="w-full border border-gray-300 rounded px-4 py-2"
+    ></textarea>
+    <button
+      type="submit"
+      class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition"
+    >
+      Nosūtīt ziņu
+    </button>
+  </form>
+</section>
 
   <!-- Footer -->
 <footer class="bg-gray-800 text-white py-12 px-6">
