@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flatcorex — Rēķinu ģenerators</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+    <h1 class="text-xl font-bold mb-6">Flatcorex</h1>
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+        <span>📬 Ziņojumi</span>
+        <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+      </a>
+      <a href="calendar.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🗓️ Kalendārs</a>
+      <a href="documents.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 bg-gray-700 rounded font-semibold">🧾 Rēķinu ģenerators</a>
+      <a href="services.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+        <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <section class="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow">
+      <h2 class="text-2xl font-bold mb-6">Izveidot rēķinu ar PVN sadalījumu</h2>
+      <form id="invoiceForm" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-4">
+          <input name="recipient" type="text" placeholder="Saņēmējs (firma)" required class="border px-3 py-2 rounded">
+          <input name="payer" type="text" placeholder="Maksātājs (klients)" required class="border px-3 py-2 rounded">
+          <input name="address" type="text" placeholder="Adrese" required class="border px-3 py-2 rounded">
+          <input name="period" type="text" placeholder="Rēķina periods (piem., 2025. gada aprīlis)" required class="border px-3 py-2 rounded">
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-2">Pakalpojumi</label>
+          <div class="grid grid-cols-6 gap-2 text-sm font-medium">
+            <span>Pakalpojums</span><span>Daudzums</span><span>Mērvienība</span><span>Cena (EUR)</span><span>PVN %</span><span>Piezīme</span>
+          </div>
+          <div id="services"></div>
+          <button type="button" id="addServiceBtn" class="mt-2 text-blue-600 hover:underline">+ Pievienot pakalpojumu</button>
+        </div>
+
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-500">Ģenerēt PDF</button>
+      </form>
+    </section>
+  </main>
+</div>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const { jsPDF } = window.jspdf;
+    const servicesDiv = document.getElementById("services");
+    const addServiceBtn = document.getElementById("addServiceBtn");
+
+    function addService() {
+      const div = document.createElement("div");
+      div.className = "grid grid-cols-6 gap-2 mb-2";
+      div.innerHTML = `
+        <input name="title" type="text" required class="border px-2 py-1 rounded"/>
+        <input name="amount" type="number" min="0.01" step="0.01" required class="border px-2 py-1 rounded"/>
+        <input name="unit" type="text" required class="border px-2 py-1 rounded"/>
+        <input name="price" type="number" min="0.01" step="0.01" required class="border px-2 py-1 rounded"/>
+        <input name="vat" type="number" min="0" max="100" step="1" value="21" class="border px-2 py-1 rounded"/>
+        <input name="note" type="text" class="border px-2 py-1 rounded"/>
+      `;
+      servicesDiv.appendChild(div);
+    }
+
+    addServiceBtn.addEventListener("click", addService);
+    addService();
+
+    document.getElementById("invoiceForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const recipient = form.recipient.value;
+      const payer = form.payer.value;
+      const address = form.address.value;
+      const period = form.period.value;
+      const date = new Date();
+      const invoiceNr = `KKM${String(date.getFullYear()).slice(2)}-${String(date.getMonth() + 1).padStart(2, '0')}/${date.getDate()}`;
+
+      const services = [...form.querySelectorAll("#services > div")].map(row => {
+        const inputs = row.querySelectorAll("input");
+        return {
+          title: inputs[0].value,
+          qty: parseFloat(inputs[1].value),
+          unit: inputs[2].value,
+          price: parseFloat(inputs[3].value),
+          vat: parseFloat(inputs[4].value),
+          note: inputs[5].value
+        };
+      });
+
+      const pdf = new jsPDF();
+      pdf.setFontSize(14);
+      pdf.text(`Rēķins Nr: ${invoiceNr}`, 14, 20);
+      pdf.setFontSize(11);
+      pdf.text(`Saņēmējs: ${recipient}`, 14, 30);
+      pdf.text(`Maksātājs: ${payer}`, 14, 36);
+      pdf.text(`Adrese: ${address}`, 14, 42);
+      pdf.text(`Rēķina periods: ${period}`, 14, 48);
+      pdf.text(`Datums: ${date.toLocaleDateString('lv-LV')}`, 14, 54);
+
+      const rows = services.map((s, i) => [
+        i + 1,
+        s.title,
+        s.qty,
+        s.unit,
+        s.price.toFixed(2),
+        (s.qty * s.price).toFixed(2),
+        `${s.vat}%`,
+        (s.qty * s.price * (1 + s.vat / 100)).toFixed(2),
+        s.note || ""
+      ]);
+
+      pdf.autoTable({
+        startY: 60,
+        head: [["Nr.", "Pakalpojums", "Daudz.`, `Mērv.", "Cena", "Summa", "PVN", "Summa ar PVN", "Piezīme"]],
+        body: rows,
+        styles: { fontSize: 10 },
+      });
+
+      const total = services.reduce((acc, s) => acc + s.qty * s.price * (1 + s.vat / 100), 0);
+      pdf.text(`Pavisam apmaksai: €${total.toFixed(2)}`, 14, pdf.lastAutoTable.finalY + 10);
+      pdf.save(`rekins_${period.replace(/\s/g, '_')}.pdf`);
+    });
+  });
+</script>
+</body>
+</html>

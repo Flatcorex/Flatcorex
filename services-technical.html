@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flatcorex - Tehniskie pakalpojumi</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <style>
+     body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      font-size: 1rem;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+    <h1 class="text-xl font-bold mb-6">Flatcorex</h1>
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+    <span>📬 Ziņojumi</span>
+    <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+  </a>
+      <a href="calendar.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🗓️ Kalendārs</a>
+      <a href="documents.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🧾 Rēķinu ģenerators</a>
+      <a href="services.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="services-technical.html" class="block px-3 py-2 bg-gray-700 rounded font-semibold">🛠️ Tehniskie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+        <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold">🛠️ Tehniskie pakalpojumi</h2>
+      <a href="services.html" class="text-blue-600 hover:underline">⬅ Atpakaļ uz ekskluzīvajiem</a>
+    </div>
+    <p class="text-gray-600 mb-4">Šie sadzīves un tehniskie servisi ir pieejami uz izsaukumu īpašuma apsekošanai, remontam vai uzlabošanai.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">💡 Elektriķis</h3>
+        <p class="text-gray-600 mb-2">Elektroinstalācijas pārbaude, remonts, apgaismojuma uzstādīšana.</p>
+        <p class="font-semibold text-blue-600 mb-4">No 80 €</p>
+        <button onclick="openModal('Elektriķis')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">🔧 Santehniķis</h3>
+        <p class="text-gray-600 mb-2">Ūdens sistēmu uzstādīšana, remonts, cauruļu maiņa un vairāk.</p>
+        <p class="font-semibold text-blue-600 mb-4">No 75 €</p>
+        <button onclick="openModal('Santehniķis')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">🛠️ Remontstrādnieks</h3>
+        <p class="text-gray-600 mb-2">Sīki remontdarbi, mēbeļu montāža, durvju/rokturu maiņa u.c.</p>
+        <p class="font-semibold text-blue-600 mb-4">No 60 €</p>
+        <button onclick="openModal('Remontstrādnieks')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+    </div>
+
+    <!-- Pasūtīšanas modālais logs -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-xl shadow-lg max-w-md w-full relative">
+        <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-black">✖</button>
+        <h3 class="text-xl font-semibold mb-4">📦 Pasūtīt pakalpojumu</h3>
+        <form class="space-y-4">
+          <input type="hidden" id="selectedService" />
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Pakalpojuma nosaukums</label>
+            <input id="serviceName" type="text" readonly class="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Tavs vārds</label>
+            <input type="text" class="w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">E-pasts</label>
+            <input type="email" class="w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Komentārs / Papildinformācija</label>
+            <textarea class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Apstiprināt pasūtījumu</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+function openModal(serviceName) {
+  document.getElementById("modal").classList.remove("hidden");
+  document.getElementById("serviceName").value = serviceName;
+}
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
+}
+</script>
+</body>
+</html>
