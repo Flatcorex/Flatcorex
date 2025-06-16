@@ -1,0 +1,190 @@
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flatcorex - Īpašnieka Panelis</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <style>
+     body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem; /* w-64 */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1f2937; /* Tailwind: bg-gray-800 */
+  color: white;
+  z-index: 50;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+<div class="mb-6">
+  <img src="logo.png" alt="Flatcorex logo" class="w-64 h-auto object-contain">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+    <span>📬 Ziņojumi</span>
+    <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+  </a>
+      <a href="calendar.html"class="block px-3 py-1.5 hover:bg-gray-700 rounded">🗓️ Kalendārs</a>
+      <a href="documents.html"class="block px-3 py-1.5 bg-gray-700 rounded font-semibold">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🧾 Rēķinu ģenerators</a>
+      <a href="services.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+        <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+ <main class="ml-64 flex-1 p-4 overflow-y-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold">📂 Dokumenti</h2>
+      <button onclick="document.getElementById('uploadModal').classList.remove('hidden')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">+ Pievienot dokumentu</button>
+    </div>
+
+    <!-- Filtrs -->
+    <div class="flex flex-wrap gap-3 items-center mb-6">
+      <span class="text-sm text-gray-600">Filtrs pēc:</span>
+      <select id="propertyFilter" onchange="filterDocuments()" class="border border-gray-300 rounded px-3 py-2">
+        <option value="">Visi īpašumi</option>
+        <option value="Teika">Teika</option>
+        <option value="Sigulda">Sigulda</option>
+        <option value="Birojs">Birojs</option>
+      </select>
+      <select id="typeFilter" onchange="filterDocuments()" class="border border-gray-300 rounded px-3 py-2">
+        <option value="">Visi dokumenti</option>
+        <option value="Rēķins">Rēķins</option>
+        <option value="Līgums">Līgums</option>
+        <option value="Komunālie">Komunālie</option>
+      </select>
+    </div>
+
+    <!-- Dokumentu saraksts -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <table class="w-full table-auto text-left" id="documentsTable">
+        <thead>
+          <tr class="text-gray-600 border-b">
+            <th class="pb-2 sortable" onclick="sortTable(0)">Datums</th>
+            <th class="pb-2 sortable" onclick="sortTable(1)">Nosaukums</th>
+            <th class="pb-2 sortable" onclick="sortTable(2)">Tips</th>
+            <th class="pb-2 sortable" onclick="sortTable(3)">Īpašums</th>
+            <th class="pb-2">Darbība</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td>01.01.2025</td><td>Rēķins_Teika_01_2025.pdf</td><td>Rēķins</td><td>Teika</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>01.02.2025</td><td>Rēķins_Teika_02_2025.pdf</td><td>Rēķins</td><td>Teika</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>01.03.2025</td><td>Rēķins_Teika_03_2025.pdf</td><td>Rēķins</td><td>Teika</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>01.04.2025</td><td>Rēķins_Teika_04_2025.pdf</td><td>Rēķins</td><td>Teika</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>01.05.2025</td><td>Rēķins_Teika_05_2025.pdf</td><td>Rēķins</td><td>Teika</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>01.06.2025</td><td>Rēķins_Teika_06_2025.pdf</td><td>Rēķins</td><td>Teika</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>15.01.2025</td><td>Līgums_Birojs_2025.pdf</td><td>Līgums</td><td>Birojs</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>20.02.2025</td><td>Komunālie_Sigulda_02_2025.pdf</td><td>Komunālie</td><td>Sigulda</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>20.03.2025</td><td>Komunālie_Sigulda_03_2025.pdf</td><td>Komunālie</td><td>Sigulda</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>20.04.2025</td><td>Komunālie_Sigulda_04_2025.pdf</td><td>Komunālie</td><td>Sigulda</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>20.05.2025</td><td>Komunālie_Sigulda_05_2025.pdf</td><td>Komunālie</td><td>Sigulda</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+          <tr><td>20.06.2025</td><td>Komunālie_Sigulda_06_2025.pdf</td><td>Komunālie</td><td>Sigulda</td><td><a href="#" class="text-blue-600 hover:underline">Lejupielādēt</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Augšupielādes modālais logs -->
+    <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-lg shadow max-w-md w-full">
+        <h3 class="text-xl font-semibold mb-4">📤 Augšupielādēt dokumentu</h3>
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium">Faila nosaukums</label>
+            <input type="file" class="w-full border border-gray-300 rounded px-3 py-2" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Dokumenta tips</label>
+            <select class="w-full border border-gray-300 rounded px-3 py-2">
+              <option>Rēķins</option>
+              <option>Līgums</option>
+              <option>Komunālie</option>
+              <option>Citi</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Saistītais īpašums</label>
+            <select class="w-full border border-gray-300 rounded px-3 py-2">
+              <option>Teika</option>
+              <option>Sigulda</option>
+              <option>Birojs</option>
+            </select>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" onclick="document.getElementById('uploadModal').classList.add('hidden')" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Atcelt</button>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Saglabāt</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+function sortTable(colIndex) {
+  const table = document.getElementById("documentsTable");
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+  let asc = table.dataset.sortOrder !== "asc";
+  table.dataset.sortOrder = asc ? "asc" : "desc";
+
+  rows.sort((a, b) => {
+    let x = a.cells[colIndex].textContent.trim();
+    let y = b.cells[colIndex].textContent.trim();
+
+    const isDate = /^\d{2}\.\d{2}\.\d{4}$/.test(x) && /^\d{2}\.\d{2}\.\d{4}$/.test(y);
+    if (isDate) {
+      const [xd, xm, xy] = x.split('.').map(Number);
+      const [yd, ym, yy] = y.split('.').map(Number);
+      const dateA = new Date(xy, xm - 1, xd);
+      const dateB = new Date(yy, ym - 1, yd);
+      return asc ? dateA - dateB : dateB - dateA;
+    }
+
+    return asc ? x.localeCompare(y) : y.localeCompare(x);
+  });
+
+  rows.forEach(row => tbody.appendChild(row));
+}
+
+function filterDocuments() {
+  const type = document.getElementById("typeFilter").value;
+  const property = document.getElementById("propertyFilter").value;
+  const table = document.getElementById("documentsTable");
+  const rows = Array.from(table.tBodies[0].rows);
+
+  rows.forEach(row => {
+    const rowType = row.cells[2].textContent.trim();
+    const rowProperty = row.cells[3].textContent.trim();
+    const matchesType = !type || rowType === type;
+    const matchesProperty = !property || rowProperty === property;
+    row.style.display = matchesType && matchesProperty ? "" : "none";
+  });
+}
+</script>
+</body>
+</html>

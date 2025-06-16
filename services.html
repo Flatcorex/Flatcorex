@@ -1,0 +1,167 @@
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flatcorex - Īpašnieka Panelis</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <style>
+     body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem; /* w-64 */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1f2937; /* Tailwind: bg-gray-800 */
+  color: white;
+  z-index: 50;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+<div class="mb-6">
+  <img src="logo.png" alt="Flatcorex logo" class="w-64 h-auto object-contain">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+    <span>📬 Ziņojumi</span>
+    <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+  </a>
+      <a href="calendar.html"class="block px-3 py-1.5 hover:bg-gray-700 rounded">🗓️ Kalendārs</a>
+      <a href="documents.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🧾 Rēķinu ģenerators</a>
+      <a href="services.html"class="block px-3 py-1.5 bg-gray-700 rounded font-semibold">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+        <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ml-64 flex-1 p-4 overflow-y-auto">
+    <h2 class="text-2xl font-bold mb-6">⭐ Ekskluzīvie pakalpojumi</h2>
+    <p class="text-gray-600 mb-4">Premium pakalpojumi, kas palielina Tava īpašuma vērtību un ienesīgumu.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+<!-- Iecienītā kombinācija – kā kartīte režģī -->
+<div class="bg-blue-600 text-white rounded-xl shadow p-6 h-full flex flex-col justify-between hover:shadow-lg hover:brightness-105 transition">
+  <div>
+    <h3 class="text-lg font-semibold mb-2">📢 Īpašnieku iecienītā kombinācija: Foto + Dizains</h3>
+    <p class="text-sm mb-2">✓ 15 fotogrāfijas un video + 1h interjera konsultācija</p>
+    <p class="text-sm italic text-blue-100">“Īres pieprasījums dubultojās pēc šī pakalpojuma!” – Ilze</p>
+  </div>
+  <button onclick="openOrderModal('Foto + Dizains kombinācija')" class="bg-white text-blue-700 px-5 py-2 rounded hover:bg-gray-100 font-semibold mt-4">Pasūtīt</button>
+</div>
+
+      <!-- Augstas klases pakalpojumi -->
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">📸 Profesionāla foto un video sesija</h3>
+        <p class="text-gray-600 mb-2">Kvalitatīvs īpašuma saturs palielina interesi līdz pat 70%.</p>
+        <p class="font-semibold text-blue-600 mb-4">Cena: 290 €</p>
+        <button onclick="openOrderModal('Foto un video sesija')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">🧹 Profesionālā uzkopšana pirms īres</h3>
+        <p class="text-gray-600 mb-2">Padari īpašumu perfektu pirms katra jaunā īrnieka ierašanās.</p>
+        <p class="font-semibold text-blue-600 mb-4">Cena: 120 €</p>
+        <button onclick="openOrderModal('Uzkopšana')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">📄 Juridiskā konsultācija un līgumu pārbaude</h3>
+        <p class="text-gray-600 mb-2">Eksperta pārbaude, lai Tavi līgumi būtu droši un likumīgi korekti.</p>
+        <p class="font-semibold text-blue-600 mb-4">Cena: 180 €</p>
+        <button onclick="openOrderModal('Juridiskā konsultācija')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">🏗️ Interjera dizaina konsultācija</h3>
+        <p class="text-gray-600 mb-2">Palielini īpašuma pievilcību un īres cenu ar profesionālu interjera palīdzību.</p>
+        <p class="font-semibold text-blue-600 mb-4">Cena: 350 €</p>
+        <button onclick="openOrderModal('Interjera dizains')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">📈 Investīciju ienesīguma audits</h3>
+        <p class="text-gray-600 mb-2">Saņem detalizētu analīzi par īpašuma ROI ar ieteikumiem uzlabojumiem.</p>
+        <p class="font-semibold text-blue-600 mb-4">Cena: 450 €</p>
+        <button onclick="openOrderModal('ROI audits')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <h3 class="text-lg font-semibold mb-2">🌐 Starptautiskā reklāma premium tirgos</h3>
+        <p class="text-gray-600 mb-2">Tava īpašuma izvietošana premium platformās ārpus Latvijas.</p>
+        <p class="font-semibold text-blue-600 mb-4">Cena: 590 €</p>
+        <button onclick="openOrderModal('Starptautiskā reklāma')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Pasūtīt</button>
+      </div>
+
+      <!-- Jauna sadaļa: Palīgserviss -->
+      <div class="bg-white rounded-xl shadow p-6 border border-yellow-400">
+        <h3 class="text-lg font-semibold mb-2">🛠️ Tehniskie pakalpojumi (elektriķi, santehniķi...)</h3>
+        <p class="text-gray-600 mb-2">Remontdarbi, elektroinstalācija, santehnika un citi ikdienas servisi.</p>
+        <p class="font-semibold text-blue-600 mb-4">Sākot no 80 €</p>
+        <a href="services-technical.html" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-400 block text-center">Skatīt pakalpojumus</a>
+      </div>
+    </div>
+
+    <!-- Modālais logs pasūtīšanai -->
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-xl shadow-lg max-w-md w-full relative">
+        <button onclick="closeOrderModal()" class="absolute top-3 right-3 text-gray-500 hover:text-black">✖</button>
+        <h3 class="text-xl font-semibold mb-4">📦 Pasūtīt pakalpojumu</h3>
+        <form class="space-y-4">
+          <input type="hidden" id="selectedService" />
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Pakalpojuma nosaukums</label>
+            <input id="serviceName" type="text" readonly class="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Tavs vārds</label>
+            <input type="text" class="w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">E-pasts</label>
+            <input type="email" class="w-full border border-gray-300 rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Komentārs / Papildinformācija</label>
+            <textarea class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 w-full">Apstiprināt pasūtījumu</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+function openOrderModal(serviceName) {
+  document.getElementById("orderModal").classList.remove("hidden");
+  document.getElementById("serviceName").value = serviceName;
+}
+function closeOrderModal() {
+  document.getElementById("orderModal").classList.add("hidden");
+}
+</script>
+</body>
+</html>

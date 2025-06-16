@@ -1,0 +1,321 @@
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flatcorex - Īpašnieka Panelis</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <style>
+     body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem; /* w-64 */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1f2937; /* Tailwind: bg-gray-800 */
+  color: white;
+  z-index: 50;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+<div class="mb-6">
+  <img src="logo.png" alt="Flatcorex logo" class="w-64 h-auto object-contain">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html"class="block px-3 py-1.5 bg-gray-700 rounded font-semibold">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+    <span>📬 Ziņojumi</span>
+    <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+  </a>
+      <a href="calendar.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🗓️ Kalendārs</a>
+      <a href="documents.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🧾 Rēķinu ģenerators</a>
+      <a href="services.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+        <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+ <main class="ml-64 flex-1 p-4 overflow-y-auto">
+<div id="financeAlerts" class="space-y-2 mb-6"></div>
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold">💰 Finanses</h2>
+      <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500 transition">+ Jauns ieraksts</button>
+    </div>
+
+    <!-- Ienākumi un izdevumi -->
+    <div class="bg-white rounded-xl shadow p-6 mb-6">
+      <h3 class="text-xl font-semibold mb-4">📑 Mēneša ienākumu un izdevumu pārskats</h3>
+      <table class="w-full table-auto text-left">
+        <thead>
+          <tr class="text-gray-600 border-b">
+            <th class="pb-2">Datums</th>
+            <th class="pb-2">Veids</th>
+            <th class="pb-2">Summa (€)</th>
+            <th class="pb-2">Objekts</th>
+            <th class="pb-2">Maksātājs / Saņēmējs</th>
+            <th class="pb-2">Komentārs</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr><td>01.01.2025</td><td>Ieņēmums</td><td class="text-green-600 font-semibold">500</td><td>Teika</td><td>Jānis Bērziņš</td><td>Janvāra īre</td></tr>
+          <tr><td>02.01.2025</td><td>Izdevums</td><td class="text-red-600 font-semibold">200</td><td>Sigulda</td><td>Meistars SIA</td><td>Grīdas remonts</td></tr>
+          <tr><td>01.02.2025</td><td>Ieņēmums</td><td class="text-green-600 font-semibold">600</td><td>Birojs</td><td>SIA Alfa</td><td>Februāra noma</td></tr>
+          <tr><td>04.02.2025</td><td>Izdevums</td><td class="text-red-600 font-semibold">180</td><td>Sigulda</td><td>Latvenergo</td><td>Elektrība</td></tr>
+          <tr><td>01.03.2025</td><td>Ieņēmums</td><td class="text-green-600 font-semibold">550</td><td>Teika</td><td>Jānis Bērziņš</td><td>Marts</td></tr>
+          <tr><td>05.03.2025</td><td>Izdevums</td><td class="text-red-600 font-semibold">160</td><td>Birojs</td><td>Rīgas Namsaimnieks</td><td>Uzturēšana</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Komunālie maksājumi -->
+    <div class="bg-white rounded-xl shadow p-6 mb-6">
+      <h3 class="text-xl font-semibold mb-4">💡 Komunālie maksājumi pa mēnešiem</h3>
+      <table class="w-full text-left table-auto">
+        <thead>
+          <tr class="text-gray-600 border-b">
+            <th class="pb-2">Mēnesis</th>
+            <th class="pb-2">Elektrība (€)</th>
+            <th class="pb-2">Ūdens (€)</th>
+            <th class="pb-2">Apkure (€)</th>
+            <th class="pb-2">Pārējie (€)</th>
+            <th class="pb-2">Kopā (€)</th>
+          </tr>
+        </thead>
+        <tbody id="utilities-body" class="divide-y">
+          <tr><td>Janvāris</td><td>60</td><td>25</td><td>85</td><td>15</td><td>185</td></tr>
+          <tr><td>Februāris</td><td>58</td><td>24</td><td>90</td><td>12</td><td>184</td></tr>
+          <tr><td>Marts</td><td>62</td><td>23</td><td>80</td><td>10</td><td>175</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="font-semibold text-blue-800">
+            <td colspan="5" class="text-right pr-4">Vidēji mēnesī:</td>
+            <td id="averageTotal">-</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <!-- ROI Kalkulators -->
+<section class="bg-white rounded-xl shadow p-6 mb-6">
+  <h3 class="text-xl font-semibold mb-4 border-b pb-2">📈 ROI Kalkulators</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">Ienākumi (€)</label>
+      <input id="income" type="number" class="w-full p-2 border border-gray-300 rounded" placeholder="Piem. 5000" />
+    </div>
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">Izdevumi (€)</label>
+      <input id="expenses" type="number" class="w-full p-2 border border-gray-300 rounded" placeholder="Piem. 2000" />
+    </div>
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">Investīcija (€)</label>
+      <input id="investment" type="number" class="w-full p-2 border border-gray-300 rounded" placeholder="Piem. 10000" />
+    </div>
+  </div>
+  <button onclick="calculateROI()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Aprēķināt ROI</button>
+  <p id="roiResult" class="mt-4 text-lg font-semibold text-blue-700"></p>
+</section>
+
+<!-- ROI Diagramma -->
+<section class="bg-white rounded-xl shadow p-6 mb-6">
+  <h3 class="text-xl font-semibold mb-4 border-b pb-2">📊 Mēnešu ROI pārskats</h3>
+  <canvas id="roiChart" height="100"></canvas>
+</section>
+
+<!-- Gada pārskats -->
+<section class="bg-white rounded-xl shadow p-6 mb-6">
+  <h3 class="text-xl font-semibold mb-4 border-b pb-2">📆 Gada pārskats</h3>
+  <table class="w-full table-auto text-left mb-4">
+    <thead>
+      <tr class="text-gray-600 border-b">
+        <th class="pb-2">Gads</th>
+        <th class="pb-2">Kopējie ieņēmumi (€)</th>
+        <th class="pb-2">Kopējie izdevumi (€)</th>
+        <th class="pb-2">ROI (%)</th>
+        <th class="pb-2">Peļņa (€)</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y">
+      <tr><td>2022</td><td>8500</td><td>4300</td><td>49.4%</td><td>4200</td></tr>
+      <tr><td>2023</td><td>9700</td><td>4800</td><td>50.5%</td><td>4900</td></tr>
+      <tr><td>2024</td><td>11200</td><td>5100</td><td>54.5%</td><td>6100</td></tr>
+    </tbody>
+  </table>
+  <p class="text-sm text-gray-500">* ROI tiek aprēķināts attiecībā pret kopējām investīcijām katrā gadā.</p>
+</section>
+
+<!-- Kavējumi -->
+<section class="bg-white rounded-xl shadow p-6 mb-6">
+  <h3 class="text-xl font-semibold mb-4 border-b pb-2">🚨 Kavēto maksājumu uzskaite</h3>
+  <table class="w-full table-auto text-left">
+    <thead>
+      <tr class="text-gray-600 border-b">
+        <th class="pb-2">Īrnieks</th>
+        <th class="pb-2">Objekts</th>
+        <th class="pb-2">Mēnesis</th>
+        <th class="pb-2">Summa (€)</th>
+        <th class="pb-2">Kavējuma dienas</th>
+        <th class="pb-2">Stāvoklis</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y">
+      <tr><td>Jānis Bērziņš</td><td>Teika</td><td>Janvāris</td><td>500</td><td>8</td><td class="text-red-600 font-semibold">Neapmaksāts</td></tr>
+      <tr><td>SIA Alfa</td><td>Birojs</td><td>Februāris</td><td>600</td><td>3</td><td class="text-yellow-600 font-semibold">Aizkavēts</td></tr>
+      <tr><td>Andris Kalniņš</td><td>Sigulda</td><td>Marts</td><td>450</td><td>0</td><td class="text-green-600 font-semibold">Samaksāts</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 📊 Automatizēts Finanšu Kopsavilkums -->
+<div class="bg-white rounded-xl shadow p-6 mb-6">
+  <h3 class="text-xl font-semibold mb-4">📊 Automatizēts Finanšu Kopsavilkums</h3>
+  <p id="financialSummary" class="text-gray-700 leading-relaxed"></p>
+</div>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    // ROI Chart
+    const roiCtx = document.getElementById("roiChart");
+    if (roiCtx) {
+      new Chart(roiCtx, {
+        type: "line",
+        data: {
+          labels: ["Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs"],
+          datasets: [{
+            label: "ROI (%)",
+            data: [6.5, 7.2, 6.8, 7.9, 7.3, 8.1],
+            borderColor: "#3b82f6",
+            backgroundColor: "rgba(59, 130, 246, 0.2)",
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { callback: value => `${value}%` }
+            }
+          }
+        }
+      });
+    }
+
+    // Automatizēts Finanšu Kopsavilkums + Brīdinājumi
+    const summaryElement = document.getElementById("financialSummary");
+    const alertsContainer = document.getElementById("financeAlerts");
+
+    if (summaryElement) {
+      const transactions = [
+        { date: "01.01.2025", type: "income", amount: 500, object: "Teika" },
+        { date: "02.01.2025", type: "expense", amount: 200, object: "Sigulda" },
+        { date: "01.02.2025", type: "income", amount: 600, object: "Birojs" },
+        { date: "04.02.2025", type: "expense", amount: 180, object: "Sigulda" },
+        { date: "01.03.2025", type: "income", amount: 550, object: "Teika" },
+        { date: "05.03.2025", type: "expense", amount: 160, object: "Birojs" }
+      ];
+
+      let incomeTotal = 0, expenseTotal = 0;
+      const objectStats = {};
+
+      transactions.forEach(t => {
+        if (!objectStats[t.object]) objectStats[t.object] = { income: 0, expense: 0 };
+        if (t.type === "income") {
+          incomeTotal += t.amount;
+          objectStats[t.object].income += t.amount;
+        } else {
+          expenseTotal += t.amount;
+          objectStats[t.object].expense += t.amount;
+        }
+      });
+
+      const netProfit = incomeTotal - expenseTotal;
+      const investment = 10000;
+      const roi = Math.round((netProfit / investment) * 1000) / 10;
+
+      // Kopsavilkums
+      let bestObject = '', bestProfit = -Infinity;
+      for (const [obj, val] of Object.entries(objectStats)) {
+        const profit = val.income - val.expense;
+        if (profit > bestProfit) {
+          bestProfit = profit;
+          bestObject = obj;
+        }
+      }
+
+      const summary = `
+        Šajā periodā īpašumi kopā radīja <strong>${incomeTotal} €</strong> ieņēmumus un <strong>${expenseTotal} €</strong> izdevumus.
+        Neto peļņa: <strong>${netProfit} €</strong>, ROI: <strong>${roi}%</strong>.<br><br>
+        🏆 Visienesīgākais īpašums: <strong>${bestObject}</strong> (${bestProfit} € peļņa).<br>
+        ${roi > 50 ? '🚀 Lielisks ienesīgums – apsver paplašināšanos!' :
+          roi >= 30 ? '📈 Stabili, bet ir potenciāls augt.' :
+          '⚠️ Zemāks ROI – pārbaudi izdevumus vai apsver cenu korekcijas.'}
+      `;
+      summaryElement.innerHTML = summary;
+
+      // Brīdinājumi
+      if (alertsContainer) {
+        const alerts = [];
+
+        if (roi < 30) {
+          alerts.push({
+            type: 'warning',
+            text: `⚠️ ROI ir tikai ${roi}% – pārskati izdevumus vai apsver īres korekciju.`
+          });
+        }
+
+        if (expenseTotal > incomeTotal * 0.8) {
+          alerts.push({
+            type: 'warning',
+            text: `📉 Izdevumi (${expenseTotal} €) tuvojas ienākumiem (${incomeTotal} €).`
+          });
+        }
+
+        const overdueCount = 2; // piemērā fiksēts, var aizvietot ar reāliem datiem
+        if (overdueCount > 0) {
+          alerts.push({
+            type: 'error',
+            text: `🚨 ${overdueCount} maksājumi kavēti! Ieteicams sazināties ar īrniekiem.`
+          });
+        }
+
+        alerts.forEach(alert => {
+          const bg = alert.type === 'error' ? 'bg-red-50 text-red-800' :
+                     alert.type === 'warning' ? 'bg-yellow-50 text-yellow-800' :
+                     'bg-blue-50 text-blue-800';
+
+          alertsContainer.innerHTML += `
+            <div class="${bg} px-4 py-2 rounded shadow mb-2">
+              ${alert.text}
+            </div>
+          `;
+        });
+      }
+    }
+  });
+</script>
+</body>
+</html>

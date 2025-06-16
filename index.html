@@ -1,0 +1,304 @@
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flatcorex - Īpašnieka Panelis</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <style>
+     body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem; /* w-64 */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1f2937; /* Tailwind: bg-gray-800 */
+  color: white;
+  z-index: 50;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+<div class="mb-6">
+  <img src="logo.png" alt="Flatcorex logo" class="w-64 h-auto object-contain">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 bg-gray-700 rounded font-semibold">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+    <span>📬 Ziņojumi</span>
+    <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+  </a>
+      <a href="calendar.html"class="block px-3 py-1.5 hover:bg-gray-700 rounded">🗓️ Kalendārs</a>
+      <a href="documents.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🧾 Rēķinu ģenerators</a>
+      <a href="services.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+  <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+
+    <!-- Main Content -->
+   <main class="ml-64 flex-1 p-4 overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+
+        <section id="home" class="section">
+          <h2 class="text-2xl font-bold">📊 Sākumlapa</h2>
+          <p class="text-gray-500" id="currentDate"></p>
+        </div>
+        <div>
+          <input type="text" placeholder="🔍 Meklē..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+  <div class="bg-white p-4 rounded-xl shadow">
+    <p class="text-sm text-gray-500">Peļņa šomēnes</p>
+    <p class="text-2xl font-bold text-green-600">+550 €</p>
+    <div class="w-full bg-gray-200 rounded h-2 mt-2">
+      <div class="bg-green-500 h-2 rounded" style="width: 60%"></div>
+    </div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow">
+    <p class="text-sm text-gray-500">Vidējais ROI</p>
+    <p class="text-2xl font-bold text-blue-600">7.8%</p>
+    <div class="w-full bg-gray-200 rounded h-2 mt-2">
+      <div class="bg-blue-500 h-2 rounded" style="width: 78%"></div>
+    </div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow">
+    <p class="text-sm text-gray-500">Īpašumu aizpildījums</p>
+    <p class="text-2xl font-bold text-yellow-600">2/3</p>
+    <div class="w-full bg-gray-200 rounded h-2 mt-2">
+      <div class="bg-yellow-500 h-2 rounded" style="width: 66%"></div>
+    </div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow">
+    <p class="text-sm text-gray-500">Ziņojumi bez atbildes</p>
+    <p class="text-2xl font-bold text-black">2</p>
+    <div class="w-full bg-gray-200 rounded h-2 mt-2">
+      <div class="bg-gray-600 h-2 rounded" style="width: 20%"></div>
+    </div>
+  </div>
+</div>
+
+      <!-- Brīdinājumi -->
+      <div class="bg-white p-6 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4">📢 Paziņojumi</h3>
+        <div class="space-y-2">
+          <div class="bg-red-50 text-red-800 px-4 py-2 rounded shadow">⚠️ Līgums beidzas pēc 12 dienām!</div>
+          <div class="bg-yellow-50 text-yellow-800 px-4 py-2 rounded shadow">📬 2 ziņojumi gaida atbildi</div>
+          <div class="bg-blue-50 text-blue-800 px-4 py-2 rounded shadow">📎 Trūkst komunālo dokumentu</div>
+          <div class="bg-orange-50 text-orange-800 px-4 py-2 rounded shadow">📉  Īpašuma aizpildījums zem 70% no 100% </div>
+        </div>
+      </div>
+
+      <!-- Saīsnes -->
+      <div class="bg-white p-6 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4">⚡ Ātrās darbības</h3>
+        <div class="flex flex-wrap gap-4">
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">📎 Pievienot dokumentu</button>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">💬 Ziņojums īrniekam</button>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">🛠️ Remonts</button>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">📅 Jauns notikums</button>
+        </div>
+      </div>
+
+      <!-- Diagramma -->
+      <div class="bg-white p-6 rounded-xl shadow mb-6">
+        <label for="monthSelect" class="block font-medium text-gray-600 mb-2">Izvēlies mēnesi:</label>
+        <select id="monthSelect" class="border-gray-300 rounded px-2 py-1 mb-4" onchange="updateChart()">
+          <option value="apr">Aprīlis</option>
+          <option value="mar">Marts</option>
+          <option value="feb">Februāris</option>
+        </select>
+        <canvas id="revenueChart" height="100"></canvas>
+      </div>
+
+      <!-- Notikumu plūsma -->
+      <div class="bg-white p-6 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4">🕒 Notikumu plūsma</h3>
+        <div class="timeline">
+          <div class="timeline-entry"><p><strong>📅 21. aprīlis:</strong> Remonts Siguldā</p></div>
+          <div class="timeline-entry"><p><strong>💳 20. aprīlis:</strong> Maksājums saņemts no Teika</p></div>
+          <div class="timeline-entry"><p><strong>📎 19. aprīlis:</strong> Dokuments pievienots Āgenskalns</p></div>
+        </div>
+      </div>
+ </section>
+
+<section id="properties" class="section">
+<div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">🏘️ Īpašumi</h2>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition">+ Pievienot īpašumu</button>
+  </div>
+
+  <!-- Īpašumu kartītes -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Kartīte 1 -->
+    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+      <img src="https://via.placeholder.com/300x200" class="rounded-lg mb-4" alt="Teikas dzīvoklis">
+      <h3 class="text-lg font-semibold mb-2">Dzīvoklis Teikā</h3>
+      <p class="text-gray-500 mb-1">Brīvības iela 123, Rīga</p>
+      <span class="inline-block bg-green-100 text-green-800 px-2 py-0.5 text-xs rounded mb-4">Izīrēts</span>
+      <button onclick="openModal('Teika', 'Plašs dzīvoklis ar balkonu. 2 istabas, 65m².')" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 mt-auto">Skatīt sīkāk</button>
+    </div>
+
+    <!-- Kartīte 2 -->
+    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+      <img src="https://via.placeholder.com/300x200" class="rounded-lg mb-4" alt="Centra birojs">
+      <h3 class="text-lg font-semibold mb-2">Birojs Centrā</h3>
+      <p class="text-gray-500 mb-1">Kr. Barona iela 45, Rīga</p>
+      <span class="inline-block bg-yellow-100 text-yellow-800 px-2 py-0.5 text-xs rounded mb-4">Pieejams</span>
+      <button onclick="openModal('Centrs', 'Biroja telpas ar 4 kabinetiem, kopā 120m².')" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 mt-auto">Skatīt sīkāk</button>
+    </div>
+
+    <!-- Kartīte 3 -->
+    <div class="bg-white rounded-xl shadow p-4 flex flex-col">
+      <img src="https://via.placeholder.com/300x200" class="rounded-lg mb-4" alt="Siguldas māja">
+      <h3 class="text-lg font-semibold mb-2">Māja Siguldā</h3>
+      <p class="text-gray-500 mb-1">Saulgriežu iela 9, Sigulda</p>
+      <span class="inline-block bg-red-100 text-red-800 px-2 py-0.5 text-xs rounded mb-4">Remontā</span>
+      <button onclick="openModal('Sigulda', 'Ģimenes māja ar 2 stāviem, 180m². Šobrīd remonts.')" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 mt-auto">Skatīt sīkāk</button>
+    </div>
+  </div>
+</section>
+
+
+    </main>
+  </div>
+
+  <!-- Scroll to top -->
+  <button id="backToTop" class="bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg fixed bottom-8 right-8">⬆️ Augšā</button>
+
+  <!-- Logout Modal -->
+  <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white p-6 rounded shadow-xl text-center max-w-sm w-full">
+      <h3 class="text-lg font-semibold mb-4">Vai tiešām vēlies izrakstīties?</h3>
+      <div class="flex justify-center gap-4">
+        <button onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Atcelt</button>
+        <a href="#logout" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded">Izrakstīties</a>
+      </div>
+    </div>
+  </div>
+<script>
+  let revenueChart = null;
+
+  const chartData = {
+    apr: [1500, 1580, 1600, 1620],
+    mar: [1450, 1490, 1510, 1590],
+    feb: [1380, 1420, 1475, 1500]
+  };
+
+  function renderChart(month = 'apr') {
+    const canvas = document.getElementById('revenueChart');
+    const ctx = canvas.getContext('2d');
+
+    if (revenueChart) {
+      revenueChart.destroy();
+    }
+
+    revenueChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1.ned.', '2.ned.', '3.ned.', '4.ned.'],
+        datasets: [{
+          label: 'Ieņēmumi €',
+          data: chartData[month],
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59, 130, 246, 0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { callback: value => `€${value}` }
+          }
+        }
+      }
+    });
+  }
+
+  function updateChart() {
+    const month = document.getElementById('monthSelect').value;
+    renderChart(month);
+  }
+
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(section => {
+      section.classList.add('hidden');
+    });
+
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.remove('hidden');
+      if (id === 'home') {
+        renderChart(); // atjauno grafiku tikai home sadaļā
+      }
+    }
+  }
+
+  function confirmLogout() {
+    document.getElementById('logoutModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('logoutModal').classList.add('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Rāda sākumlapa
+    showSection('home');
+
+    // Sidebar navigācija
+    document.querySelectorAll('aside a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href').substring(1);
+        showSection(id);
+      });
+    });
+
+    // Datuma rādīšana
+    document.getElementById('currentDate').textContent =
+      new Date().toLocaleDateString('lv-LV', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+
+    // Scroll to top poga
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>

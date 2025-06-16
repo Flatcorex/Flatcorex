@@ -1,0 +1,154 @@
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flatcorex - Īpašnieka Panelis</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <style>
+     body { font-family: 'Inter', sans-serif; }
+    .sidebar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem; /* w-64 */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1f2937; /* Tailwind: bg-gray-800 */
+  color: white;
+  z-index: 50;
+    }
+    nav a { font-size: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col py-6 px-4 sidebar-fixed">
+<div class="mb-6">
+  <img src="logo.png" alt="Flatcorex logo" class="w-64 h-auto object-contain">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-semibold">G</div>
+      <div>
+        <p class="text-xs text-gray-400">Sveiks,</p>
+        <p class="font-semibold text-sm">Gvido Rožinskis</p>
+      </div>
+    </div>
+    <nav class="space-y-3">
+      <a href="index.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏠 Sākumlapa</a>
+      <a href="properties.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🏨 Īpašumi</a>
+      <a href="finance.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">💰 Finanses</a>
+      <a href="messages.html" class="block px-3 py-2 hover:bg-gray-700 text-white rounded flex justify-between items-center">
+    <span>📬 Ziņojumi</span>
+    <span class="bg-red-500 text-xs px-2 py-0.5 rounded-full">2</span>
+  </a>
+      <a href="calendar.html" class="block px-3 py-1.5 bg-gray-700 rounded font-semibold">🗓️ Kalendārs</a>
+      <a href="documents.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">📂 Dokumenti</a>
+      <a href="invoice.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">🧾 Rēķinu ģenerators</a>
+      <a href="services.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⭐ Ekskluzīvie pakalpojumi</a>
+      <a href="settings.html" class="block px-3 py-1.5 hover:bg-gray-700 rounded">⚙️ Iestatījumi</a>
+      <div class="border-t border-gray-700 pt-4">
+        <button class="block w-full px-3 py-2 bg-red-600 rounded text-center hover:bg-red-500 transition">🚪 Izrakstīties</button>
+      </div>
+    </nav>
+  </aside>
+<!-- Main Content -->
+ <main class="ml-64 flex-1 p-4 overflow-y-auto">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">🗓️ Kalendārs</h2>
+    <button onclick="openModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-500 text-sm">+ Jauns notikums</button>
+  </div>
+
+  <!-- Notifikācija -->
+  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-3 rounded mb-4 text-sm">
+    <p><strong>Brīdinājums:</strong> 3 rēķini joprojām nav nosūtīti. Pārbaudi dokumentu sadaļu vai nosūti tos tieši no kalendāra!</p>
+  </div>
+
+  <!-- Kalendārs -->
+  <div class="bg-white rounded-xl shadow p-6 mb-6">
+  <div id="calendar"></div>
+  </div>
+</main>
+</div>
+
+<!-- MODĀLAIS LOGS -->
+<div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-40 z-50">
+  <div class="bg-white rounded-lg p-4 shadow-lg w-full max-w-sm text-sm">
+    <h3 class="text-lg font-semibold mb-3">📤 Nosūtīt rēķinu / ziņojumu</h3>
+    <form id="sendForm" class="space-y-3">
+      <div>
+        <label class="block text-xs font-medium">E-pasts</label>
+        <input type="email" id="email" class="w-full border border-gray-300 rounded px-3 py-2" required />
+      </div>
+      <div>
+        <label class="block text-xs font-medium">Ziņojums</label>
+        <textarea id="message" class="w-full border border-gray-300 rounded px-3 py-2" rows="3" required></textarea>
+      </div>
+      <div>
+        <label class="block text-xs font-medium">Pievienot failu</label>
+        <input type="file" id="attachment" class="text-sm" />
+      </div>
+      <div class="flex justify-end gap-2 mt-3">
+        <button type="button" onclick="closeModal()" class="bg-gray-300 px-4 py-1.5 rounded hover:bg-gray-400">Atcelt</button>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-1.5 rounded hover:bg-blue-500">Nosūtīt</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'lv',
+      height: 500,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek'
+      },
+      events: [
+  { title: 'Remonts - Sigulda', start: '2025-05-03' },
+  { title: 'Nosūtīt rēķinu - Teika', start: '2025-05-10', backgroundColor: '#f59e0b' },
+  { title: 'Līguma beigas - Birojs', start: '2025-05-27' },
+  { title: 'Atgādinājums - Komunālie', start: '2025-05-15', backgroundColor: '#10b981' },
+
+  // JŪNIJA UZDEVUMI 👇
+  { title: 'Rēķinu nosūtīšana - Āgenskalns', start: '2025-06-03', backgroundColor: '#f59e0b' },
+  { title: 'Komunālo maksājumu pārbaude', start: '2025-06-06', backgroundColor: '#10b981' },
+  { title: 'Tikšanās ar īrnieku - Teika', start: '2025-06-10', backgroundColor: '#3b82f6' },
+  { title: 'Remonta pārbaude - Sigulda', start: '2025-06-14' },
+  { title: 'Līguma pagarināšana - Centrs', start: '2025-06-21', backgroundColor: '#ec4899' },
+  { title: 'Atgādinājums - Rēķinu termiņš', start: '2025-06-25', backgroundColor: '#f87171' }
+],
+      eventClick: function () {
+        openModal();
+      }
+    });
+    calendar.render();
+
+    document.getElementById('sendForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      alert(`Ziņojums nosūtīts uz: ${email}\nSaturam: ${message}`);
+      closeModal();
+    });
+  });
+
+  function openModal() {
+    const modal = document.getElementById("modal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("modal");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+</script>
